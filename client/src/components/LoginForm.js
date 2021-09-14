@@ -1,10 +1,18 @@
 // see SignupForm.js for comments
 import React, { useState } from 'react';
+<<<<<<< HEAD
+=======
+import { useMutation } from '@apollo/client';
+>>>>>>> develop
 import { Form, Button, Alert } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
+<<<<<<< HEAD
 import { useMutation } from '@apollo/react-hooks';
 import { LOGIN_USER } from '../utils/mutations';
+=======
+import { loginUser } from '../utils/API';
+>>>>>>> develop
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
@@ -28,9 +36,16 @@ const LoginForm = () => {
     }
 
     try {
+<<<<<<< HEAD
       const { data } = await loginUser({ variables: {...userFormData}
       });
       
+=======
+      const { data } = await loginUser({
+        variables: {...userFormData}
+      });
+
+>>>>>>> develop
       Auth.login(data.login.token);
     } catch (err) {
       console.error(err);

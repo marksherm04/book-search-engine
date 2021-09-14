@@ -1,7 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+<<<<<<< HEAD
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient } from 'apollo-boost';
+=======
+import { ApolloClient } from 'apollo-boost';
+import { ApolloProvider } from '@apollo/client';
+>>>>>>> develop
 
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
@@ -22,7 +27,11 @@ const apoClient = new ApolloClient({
 
 function App() {
   return (
+<<<<<<< HEAD
     <ApolloProvider client ={client}>
+=======
+    <ApolloProvider client={apoClient}>
+>>>>>>> develop
     <Router>
       <>
         <Navbar />
