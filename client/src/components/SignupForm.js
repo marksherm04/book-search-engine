@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-=======
 import { useMutation } from '@apollo/client';
->>>>>>> develop
 import { Form, Button, Alert } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
