@@ -12,16 +12,59 @@ const resolvers = {
 
 				return userInput;
 			}
-			throw new AuthenticationError('Please log in!');
+			throw new AuthenticationError('Please log in');
 		}
 	},
 
 	Mutation: {
+		login: async (parent, { email, password }) => {
+			const user = await User.findOne({ email });
 
+			if (!user) {
+				throw new AuthenticationError('Incorrect credentials');
+			}
+
+			const userPassword = await User.isCorrectPassword(password);
+
+			if (!userPassword) {
+				throw new AuthenticationError('Incorrect credentials');
+			}
+
+			const authToken = signToken(user);
+			return { user, token }; 
+		},
+		addUser: async(parent, args) => {
+			const user = await User.create(args);
+			const authToken = signToken(user);
+			return { user, token };
+		},
+		saveBook: async(parent, args, context) => {
+			if (context.user) {
+				const userSaveBook = await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $addToSet: { saveBook: args.book } },
+					{ new: true }
+				);
+
+				return userSaveBook;
+			}
+
+			throw new AuthenticationError('You must login to save a book')
+		},
+		removeBook: async(parent, args, context) => {
+			if (context.user) {
+				const userRemoveBook = await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $pull: { saveBook: { bookId: args.bookId } } },
+					{ new: true }
+				);
+
+				return userRemoveBook;
+			}
+
+			throw new AuthenticationError('You must login to remove a book');
+		}
 	}
-
-
 };
-
 
 module.exports = resolvers;
