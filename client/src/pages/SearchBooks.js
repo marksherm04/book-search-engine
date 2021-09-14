@@ -3,10 +3,10 @@ import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'reac
 import { useMutation } from '@apollo/client';
 
 import Auth from '../utils/auth';
-import { savedBook, searchGoogleBooks } from '../utils/API';
+import { saveBook, searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 import { SAVE_BOOK } from '../utils/mutations';
-
+import { fromPromise } from '@apollo/client';
 
 const SearchBooks = () => {
   // create state for holding returned google api data
