@@ -15,7 +15,7 @@ const resolvers = {
 			throw new AuthenticationError('Please log in');
 		}
 	},
-
+	// GraphQL mutataion - API that is modifying data for book users
 	Mutation: {
 		login: async (parent, { email, password }) => {
 			const user = await User.findOne({ email });
@@ -33,7 +33,7 @@ const resolvers = {
 			const authToken = signToken(user);
 			return { user, token }; 
 		},
-		addUser: async(parent, args) => {
+		createUser: async(parent, args) => {
 			const user = await User.create(args);
 			const authToken = signToken(user);
 			return { user, token };
@@ -51,15 +51,15 @@ const resolvers = {
 
 			throw new AuthenticationError('You must login to save a book')
 		},
-		removeBook: async(parent, args, context) => {
+		deleteBook: async(parent, args, context) => {
 			if (context.user) {
-				const userRemoveBook = await User.findOneAndUpdate(
+				const userDeleteBook = await User.findOneAndUpdate(
 					{ _id: context.user._id },
 					{ $pull: { saveBook: { bookId: args.bookId } } },
 					{ new: true }
 				);
 
-				return userRemoveBook;
+				return userDeleteBook;
 			}
 
 			throw new AuthenticationError('You must login to remove a book');
